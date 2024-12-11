@@ -1,17 +1,16 @@
-# ID - 129613266
-def decode_string(s: str) -> str:
+# ID - 129672379
+def decode_string(encrypted_string: str) -> str:
     """Функция, которая дешифрует инструкции."""
     stack: list[tuple[str, int]] = []
-    current_num = 0
-    current_str = ''
+    current_num = current_str = ''
+    numbers: set[str] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 
-    for char in s:
-        if char.isdigit():
-            current_num = current_num * 10 + int(char)
+    for char in encrypted_string:
+        if char in numbers:
+            current_num += char
         elif char == '[':
-            stack.append((current_str, current_num))
-            current_str = ''
-            current_num = 0
+            stack.append((current_str, int(current_num)))
+            current_str = current_num = ''
         elif char == ']':
             last_str, num = stack.pop()
             current_str = last_str + current_str * num
